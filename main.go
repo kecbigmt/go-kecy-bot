@@ -7,8 +7,25 @@ import (
 	"fmt"
 
 	"github.com/line/line-bot-sdk-go/linebot"
+	"github.com/kecbigmt/go-kecy-linebot/automata/oldLulu_001"
 	"github.com/kecbigmt/go-kecy-linebot/automata/oldLulu_008"
+	"github.com/kecbigmt/go-kecy-linebot/automata/oldLulu_047"
 )
+
+func makeInput(t string) []byte{
+	b := make([]byte, len(t))
+	for i, l := range t {
+		switch l{
+		case '0':
+			b[i] = uint8(0)
+		case '1':
+			b[i] = uint8(1)
+		default:
+			b[i] = uint8(255)
+		}
+	}
+  return b
+}
 
 func main() {
 	bot, err := linebot.New(
@@ -38,20 +55,26 @@ func main() {
 					switch {
 					case message.Text == "へい":
 						text = "ほー"
+					case strings.HasPrefix(message.Text, "L1:"):
+						t := strings.Trim(message.Text, "L1:")
+						b := makeInput(t)
+						if err := oldLulu_001.Validate(b); err != nil {
+							text = fmt.Sprintf("拒否\n%v", err)
+						} else {
+							text = "受理"
+						}
 					case strings.HasPrefix(message.Text, "L8:"):
 						t := strings.Trim(message.Text, "L8:")
-						b := make([]byte, len(t))
-						for i, l := range t {
-							switch l{
-							case '0':
-								b[i] = uint8(0)
-							case '1':
-								b[i] = uint8(1)
-							default:
-								b[i] = uint8(255)
-							}
-						}
+						b := makeInput(t)
 						if err := oldLulu_008.Validate(b); err != nil {
+							text = fmt.Sprintf("拒否\n%v", err)
+						} else {
+							text = "受理"
+						}
+					case strings.HasPrefix(message.Text, "L47:"):
+						t := strings.Trim(message.Text, "L47:")
+						b := makeInput(t)
+						if err := oldLulu_047.Validate(b); err != nil {
 							text = fmt.Sprintf("拒否\n%v", err)
 						} else {
 							text = "受理"
