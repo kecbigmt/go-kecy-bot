@@ -28,14 +28,17 @@ func main() {
 			return
 		}
 		for _, event := range events {
+			var text string
 			if event.Type == linebot.EventTypeMessage {
 				switch message := event.Message.(type) {
-				case "へい":
-					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("ほー")).Do(); err != nil {
-						log.Print(err)
-          }
 				case *linebot.TextMessage:
-					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil {
+					switch message.Text{
+					case "へい":
+						text = "ほー"
+					default:
+						text = message.Text
+					}
+					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(text)).Do(); err != nil {
 						log.Print(err)
           }
         }
