@@ -7,7 +7,7 @@ import (
 	"fmt"
 
 	"github.com/line/line-bot-sdk-go/linebot"
-	"github.com/kecbigmt/go-white-and-black-doors/oldLulu_008/finiteAutomata"
+	"github.com/kecbigmt/go-kecy-linebot/automata/oldLulu_008"
 )
 
 func main() {
@@ -51,7 +51,7 @@ func main() {
 								b[i] = uint8(255)
 							}
 						}
-						if err := finiteAutomata.Validate(b); err != nil {
+						if err := oldLulu_008.Validate(b); err != nil {
 							text = fmt.Sprintf("拒否\n%v", err)
 						} else {
 							text = "受理"
