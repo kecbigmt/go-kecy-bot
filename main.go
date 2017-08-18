@@ -3,8 +3,11 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
+	"fmt"
 
 	"github.com/line/line-bot-sdk-go/linebot"
+	"github.com/kecbigmt/go-white-and-black-doors/oldLulu_008/finiteAutomata"
 )
 
 func main() {
@@ -32,9 +35,27 @@ func main() {
 			if event.Type == linebot.EventTypeMessage {
 				switch message := event.Message.(type) {
 				case *linebot.TextMessage:
-					switch message.Text{
-					case "へい":
+					switch {
+					case message.Text == "へい":
 						text = "ほー"
+					case strings.HasPrefix(message.Text, "L8:"):
+						t := strings.Trim(message.Text, "L8:")
+						b := make([]byte, len(t))
+						for i, l := range t {
+							switch l{
+							case '0':
+								b[i] = uint8(0)
+							case '1':
+								b[i] = uint8(1)
+							default:
+								b[i] = uint8(255)
+							}
+						}
+						if err := finiteAutomata.Validate(b); err != nil {
+							text = fmt.Sprintf("拒否\n%v", err)
+						} else {
+							text = "受理"
+						}
 					default:
 						text = message.Text
 					}
