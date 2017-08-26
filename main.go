@@ -58,7 +58,7 @@ func main() {
 						text = "ほー"
 					case regexp.MustCompile(`(僕|私|俺|ぼく|わたし|おれ)は(誰|だれ)`).MatchString(message.Text):
 						userId := event.Source.UserID
-						res, err := bot.GetUserProfile(userId).Do()
+						res, err := bot.GetProfile(userId).Do()
 						if err != nil {
 							log.Print(err)
 	          }
