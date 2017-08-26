@@ -7,6 +7,22 @@
 	],
 	"Deps": [
 		{
+			"ImportPath": "github.com/kecbigmt/go-white-and-black-doors/automata/common",
+			"Rev": "05ef02fee40c733211b18ee2bd680c638b6112c1"
+		},
+		{
+			"ImportPath": "github.com/kecbigmt/go-white-and-black-doors/automata/oldLulu_001",
+			"Rev": "05ef02fee40c733211b18ee2bd680c638b6112c1"
+		},
+		{
+			"ImportPath": "github.com/kecbigmt/go-white-and-black-doors/automata/oldLulu_008",
+			"Rev": "05ef02fee40c733211b18ee2bd680c638b6112c1"
+		},
+		{
+			"ImportPath": "github.com/kecbigmt/go-white-and-black-doors/automata/oldLulu_047",
+			"Rev": "05ef02fee40c733211b18ee2bd680c638b6112c1"
+		},
+		{
 			"ImportPath": "github.com/line/line-bot-sdk-go/linebot",
 			"Comment": "1.0.0-58-gb25432f",
 			"Rev": "b25432f2bcee69c27e303c1e18857316911c8c6c"

@@ -1,6 +1,6 @@
 package oldLulu_001
 import (
-  "github.com/kecbigmt/go-kecy-linebot/automata/common"
+  "github.com/kecbigmt/go-white-and-black-doors/automata/common"
 )
 
 type room interface{

@@ -7,10 +7,15 @@ import (
 	"fmt"
 
 	"github.com/line/line-bot-sdk-go/linebot"
-	"github.com/kecbigmt/go-kecy-linebot/automata/oldLulu_001"
-	"github.com/kecbigmt/go-kecy-linebot/automata/oldLulu_008"
-	"github.com/kecbigmt/go-kecy-linebot/automata/oldLulu_047"
+	"github.com/kecbigmt/go-white-and-black-doors/automata/oldLulu_001"
+	"github.com/kecbigmt/go-white-and-black-doors/automata/oldLulu_008"
+	"github.com/kecbigmt/go-white-and-black-doors/automata/oldLulu_047"
 )
+/*
+"github.com/kecbigmt/go-kecy-linebot/automata/oldLulu_001"
+"github.com/kecbigmt/go-kecy-linebot/automata/oldLulu_008"
+"github.com/kecbigmt/go-kecy-linebot/automata/oldLulu_047"
+*/
 
 func makeInput(t string) []byte{
 	b := make([]byte, len(t))
