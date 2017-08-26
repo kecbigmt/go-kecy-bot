@@ -59,7 +59,7 @@ func main() {
 						t := strings.Replace(message.Text, "L1:", "", 1)
 						b := makeInput(t)
 						if err := oldLulu_001.Validate(b); err != nil {
-							text = fmt.Sprintf("拒否\n%v\n%v", err, t)
+							text = fmt.Sprintf("拒否\n%v", err)
 						} else {
 							text = "受理"
 						}
