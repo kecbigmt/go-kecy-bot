@@ -56,7 +56,7 @@ func main() {
 					case message.Text == "へい":
 						text = "ほー"
 					case strings.HasPrefix(message.Text, "L1:"):
-						t := strings.Trim(message.Text, "L1:")
+						t := strings.Replace(message.Text, "L1:", "", 1)
 						b := makeInput(t)
 						if err := oldLulu_001.Validate(b); err != nil {
 							text = fmt.Sprintf("拒否\n%v\n%v", err, t)
@@ -64,7 +64,7 @@ func main() {
 							text = "受理"
 						}
 					case strings.HasPrefix(message.Text, "L8:"):
-						t := strings.Trim(message.Text, "L8:")
+						t := strings.Replace(message.Text, "L8:", "", 1)
 						b := makeInput(t)
 						if err := oldLulu_008.Validate(b); err != nil {
 							text = fmt.Sprintf("拒否\n%v", err)
@@ -72,7 +72,7 @@ func main() {
 							text = "受理"
 						}
 					case strings.HasPrefix(message.Text, "L47:"):
-						t := strings.Trim(message.Text, "L47:")
+						t := strings.Replace(message.Text, "L47:", "", 1)
 						b := makeInput(t)
 						if err := oldLulu_047.Validate(b); err != nil {
 							text = fmt.Sprintf("拒否\n%v", err)
