@@ -11,11 +11,6 @@ import (
 	"github.com/kecbigmt/go-white-and-black-doors/automata/oldLulu_008"
 	"github.com/kecbigmt/go-white-and-black-doors/automata/oldLulu_047"
 )
-/*
-"github.com/kecbigmt/go-kecy-linebot/automata/oldLulu_001"
-"github.com/kecbigmt/go-kecy-linebot/automata/oldLulu_008"
-"github.com/kecbigmt/go-kecy-linebot/automata/oldLulu_047"
-*/
 
 func makeInput(t string) []byte{
 	b := make([]byte, len(t))
@@ -64,7 +59,7 @@ func main() {
 						t := strings.Trim(message.Text, "L1:")
 						b := makeInput(t)
 						if err := oldLulu_001.Validate(b); err != nil {
-							text = fmt.Sprintf("拒否\n%v", err)
+							text = fmt.Sprintf("拒否\n%v\n%v", err, t)
 						} else {
 							text = "受理"
 						}
