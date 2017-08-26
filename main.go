@@ -62,7 +62,7 @@ func main() {
 						if err != nil {
 							log.Print(err)
 	          }
-						text = fmt.Sprintf("Display Name:\n%v\nPicture URL:\n%v\nStatus Message:\n%v\nUser ID:\n%v", res.DisplayName, res.PictureURL, res.StatusMessage, userId)
+						text = fmt.Sprintf("[Display Name]\n%v\n[Picture URL]\n%v\n[Status Message]\n%v\n[User ID]\n%v", res.DisplayName, res.PictureURL, res.StatusMessage, userId)
 					case strings.HasPrefix(message.Text, "L1:"):
 						t := strings.Replace(message.Text, "L1:", "", 1)
 						b := makeInput(t)
