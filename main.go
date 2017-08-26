@@ -5,6 +5,7 @@ import (
 	"os"
 	"strings"
 	"fmt"
+	"regexp"
 
 	"github.com/line/line-bot-sdk-go/linebot"
 	"github.com/kecbigmt/go-white-and-black-doors/automata/oldLulu_001"
@@ -55,6 +56,13 @@ func main() {
 					switch {
 					case message.Text == "へい":
 						text = "ほー"
+					case regexp.MustCompile(`(僕|私|俺|ぼく|わたし|おれ)は(誰|だれ)`).MatchString(message.Text):
+						userId := event.Source.UserID
+						res, err := bot.GetUserProfile(userId).Do()
+						if err != nil {
+							log.Print(err)
+	          }
+						text = fmt.Sprintf("Display Name:%v\nPicture URL:%v\nStatus Message:%v\nUser ID:%v", res.Displayname, res.PictureURL, res.StatusMessage, userId)
 					case strings.HasPrefix(message.Text, "L1:"):
 						t := strings.Replace(message.Text, "L1:", "", 1)
 						b := makeInput(t)
