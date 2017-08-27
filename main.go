@@ -8,6 +8,7 @@ import (
 	"regexp"
 
 	"github.com/line/line-bot-sdk-go/linebot"
+	fb "github.com/huandu/facebook"
 	"github.com/kecbigmt/go-white-and-black-doors/automata/oldLulu_001"
 	"github.com/kecbigmt/go-white-and-black-doors/automata/oldLulu_008"
 	"github.com/kecbigmt/go-white-and-black-doors/automata/oldLulu_047"
@@ -61,8 +62,18 @@ func main() {
 						res, err := bot.GetProfile(userId).Do()
 						if err != nil {
 							log.Print(err)
+							return
 	          }
 						text = fmt.Sprintf("[Display Name]\n%v\n[Picture URL]\n%v\n[Status Message]\n%v\n[User ID]\n%v", res.DisplayName, res.PictureURL, res.StatusMessage, userId)
+					case strings.HasPrefix(message.Text, "http"):
+						res, err := fb.Get("", fb.Params{
+							"id": message.Text,
+						})
+						if err != nil {
+							log.Print(err)
+							return
+						}
+						text = fmt.Sprintf("%v", res["share"])
 					case strings.HasPrefix(message.Text, "L1:"):
 						t := strings.Replace(message.Text, "L1:", "", 1)
 						b := makeInput(t)
