@@ -12,7 +12,10 @@ import (
 	"github.com/kecbigmt/go-white-and-black-doors/automata/oldLulu_001"
 	"github.com/kecbigmt/go-white-and-black-doors/automata/oldLulu_008"
 	"github.com/kecbigmt/go-white-and-black-doors/automata/oldLulu_047"
+	tw "github.com/kecbigmt/tw-toolbox/lib"
 )
+
+var re_tw = regexp.MustCompile(`^TW:.+\[([0-9]+)\]$`)
 
 func makeInput(t string) []byte{
 	b := make([]byte, len(t))
@@ -57,14 +60,19 @@ func main() {
 					switch {
 					case message.Text == "へい":
 						text = "ほー"
-					case regexp.MustCompile(`(僕|私|俺|ぼく|わたし|おれ)は(誰|だれ)`).MatchString(message.Text):
-						userId := event.Source.UserID
-						res, err := bot.GetProfile(userId).Do()
+					case strings.HasPrefix(message.Text, "TW:"):
+						s := strings.Replace(message.Text, "TW:", "", 1)
+						c := "10"
+						if m := re_tw.FindStringSubmatch(message.Text); m != nil {
+							c = m[1]
+							s = strings.Replace(s, "["+c+"]", "", 1)
+						}
+						res, err := tw.Collect(s, c, "ja")
 						if err != nil {
 							log.Print(err)
 							return
-	          }
-						text = fmt.Sprintf("[Display Name]\n%v\n[Picture URL]\n%v\n[Status Message]\n%v\n[User ID]\n%v", res.DisplayName, res.PictureURL, res.StatusMessage, userId)
+						}
+						text = fmt.Sprintf("%s", res)
 					case strings.HasPrefix(message.Text, "http"):
 						res, err := fb.Get("", fb.Params{
 							"id": message.Text,
@@ -73,7 +81,7 @@ func main() {
 							log.Print(err)
 							return
 						}
-						text = fmt.Sprintf("%v", res["share"])
+						text = fmt.Sprintf("Facebook Info.\n[Comment Count]\n%v\n[Share Count]\n%v", res["share"]["comment_count"], res["share"]["share_count"])
 					case strings.HasPrefix(message.Text, "L1:"):
 						t := strings.Replace(message.Text, "L1:", "", 1)
 						b := makeInput(t)
@@ -98,6 +106,14 @@ func main() {
 						} else {
 							text = "受理"
 						}
+					case regexp.MustCompile(`(僕|私|俺|ぼく|わたし|おれ)は(誰|だれ)`).MatchString(message.Text):
+						userId := event.Source.UserID
+						res, err := bot.GetProfile(userId).Do()
+						if err != nil {
+							log.Print(err)
+							return
+						}
+						text = fmt.Sprintf("[Display Name]\n%v\n[Picture URL]\n%v\n[Status Message]\n%v\n[User ID]\n%v", res.DisplayName, res.PictureURL, res.StatusMessage, userId)
 					default:
 						text = message.Text
 					}
