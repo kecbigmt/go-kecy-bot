@@ -67,11 +67,7 @@ func main() {
 							c = m[1]
 							s = strings.Replace(s, "["+c+"]", "", 1)
 						}
-						res, err := tw.Collect(s, c, "ja")
-						if err != nil {
-							log.Print(err)
-							return
-						}
+						res := tw.Collect(s, c, "ja")
 						text = fmt.Sprintf("%s", res)
 					case strings.HasPrefix(message.Text, "http"):
 						res, err := fb.Get("", fb.Params{
@@ -81,7 +77,8 @@ func main() {
 							log.Print(err)
 							return
 						}
-						text = fmt.Sprintf("Facebook Info.\n[Comment Count]\n%v\n[Share Count]\n%v", res["share"]["comment_count"], res["share"]["share_count"])
+						text = fmt.Sprintf("Facebook Info.\n%v", res["share"])
+						//text = fmt.Sprintf("Facebook Info.\n[Comment Count]\n%v\n[Share Count]\n%v", res["share"]["comment_count"], res["share"]["share_count"])
 					case strings.HasPrefix(message.Text, "L1:"):
 						t := strings.Replace(message.Text, "L1:", "", 1)
 						b := makeInput(t)
